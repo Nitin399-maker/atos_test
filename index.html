@@ -18,6 +18,7 @@
 .config-modal-header { padding: 1rem; border-bottom: 1px solid var(--bs-border-color); display: flex; justify-content: space-between; align-items: center; }
 .config-modal-body { padding: 1rem; max-height: 60vh; overflow-y: auto; }
 .prompt-editor { min-height: 150px; font-family: monospace; font-size: 0.85rem; }
+.transcript-log { max-height: 220px; overflow-y: auto; font-size: 0.95rem; background: #111; border: 1px solid #343a40; border-radius: 8px; padding: 0.75rem; }
   </style>
 </head>
 <body>
@@ -148,6 +149,16 @@
           <div class="card-body">
             <div class="slide-preview" id="slide-preview">
               <p class="text-muted text-center">No slides yet. Start recording to generate slides from your speech.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-header">
+            <h6 class="mb-0"><i class="bi bi-chat-square-text me-2"></i>Live Transcript</h6>
+          </div>
+          <div class="card-body">
+            <div class="transcript-log" id="transcript-log">
+              <p class="text-muted mb-0">Transcript will appear here as you speak.</p>
             </div>
           </div>
         </div>

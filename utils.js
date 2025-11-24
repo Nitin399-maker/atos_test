@@ -1,15 +1,33 @@
 // utils.js
 
 // Constants
-export const DEFAULT_PROMPT = `You are a presentation slide generator.
-Listen to the user's speech and when they pause or have spoken 20-30 words, generate a slide summarizing what they just said.
+export const DEFAULT_PROMPT = `You are an intelligent segment detector that creates slides only when a logical topic is complete.
 
-Return ONLY a JSON object with this exact format:
-{"title": "Short Title 📌", "content": "- Point 1\n- Point 2\n• Point 3"}
+Context from previous slide (if any):
+- Last slide title: {{LAST_SLIDE_TITLE}}
+- Last slide content: {{LAST_SLIDE_CONTENT}}
+- Transcript chunk summarized into that slide: {{LAST_SUMMARIZED_TRANSCRIPT}}
 
-Rules:
-- Title: 3-10 words that summarizes the message. Optional emoji
-- Content: 2-4 bullet points or paragraphs, <=200 chars. Proves the title`;
+New transcript to analyze (unsummarized since last slide):
+{{UNSUMMARIZED_TRANSCRIPT}}
+
+Instructions:
+1) Check if early parts of the new transcript actually belong to the previous slide (overlap). If so, treat them as continuation when summarizing.
+2) Detect if a logical segment break occurred (topic transition, phrases like "moving on" / "next slide", summary statements, or clear topic shifts).
+3) If a break is detected, summarize ONLY the completed segment (may include overlap from previous context) into a concise slide.
+
+Return ONLY a JSON object with this structure:
+{
+  "logical_break_detected": true/false,
+  "reasoning": "brief explanation",
+  "slide": {
+    "title": "Short Title 📌",
+    "content": "- Point 1\n- Point 2\n• Point 3"
+  },
+  "summarized_up_to": "quote the last few words included in this slide's summary"
+}
+
+If no logical break is found, respond with logical_break_detected: false and a short reasoning. Include slide and summarized_up_to only when a break is detected.`;
 
 export const REVEAL_THEMES = {
   league: "league.css",
